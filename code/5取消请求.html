@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- <link rel="icon" href="<%= BASE_URL %>favicon.ico"> -->
+    <title>axios的配置</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+    <style>
+        button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h2>基本使用</h2>
+        <hr>
+        <button style="background-color: pink; height: 50px;border-radius: 10%;">发送请求</button>
+        <button style="background-color: rgb(139, 236, 144); height: 50px;border-radius: 10%;">取消请求</button>
+
+    </div>
+    <script>
+        // console.log(axios)
+        const btns = document.querySelectorAll('button');
+        let cancel = null;
+        btns[0].addEventListener('click', () => {
+            if (cancel != null) {//说明上一次请求还没有发送完
+                cancel()//取消上次发起的请求
+            }
+            // console.log(111)
+            //发请求，包括请求方法，请求路径，请求头信息等
+            // axios返回的是promise对象
+            axios({
+                method: 'GET',
+                url: 'http://localhost:3000/posts',
+                cancelToken: new CancelToken(function executor(c) {
+                    // executor 函数接收一个 cancel 函数作为参数
+                    cancel = c;
+                    
+                })
+            }).then((response) => {//请求成功的回调
+                console.log(response)
+                cancel = null;
+            })
+        });
+        //添加一篇新的文章
+        btns[1].addEventListener('click', () => {
+            cancel()
+        });
+
+    </script>
+
+</body>
+
+</html>

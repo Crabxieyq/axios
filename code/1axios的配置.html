@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- <link rel="icon" href="<%= BASE_URL %>favicon.ico"> -->
+    <title>axios的配置</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+    <style>
+        button{
+            margin-right: 10px;
+        }
+    </style>
+  </head>
+  <body>
+      <div>
+          <h2>基本使用</h2>
+          <hr>
+          <button style="background-color: pink; height: 50px;border-radius: 10%;">发送GET请求</button>
+          <button style="background-color: rgb(139, 236, 144); height: 50px;border-radius: 10%;">发送POST请求</button>
+          <button style="background-color: rgb(166, 140, 238); height: 50px;border-radius: 10%;">发送PUT请求</button>
+          <button style="background-color: rgb(241, 242, 154); height: 50px;border-radius: 10%;">发送DELETE请求</button>
+      </div>
+    <script>
+        // console.log(axios)
+        const btns = document.querySelectorAll('button') ;
+        btns[0].addEventListener('click',() => {
+            // console.log(111)
+            //发请求，包括请求方法，请求路径，请求头信息等
+            // axios返回的是promise对象
+            axios({
+                method: 'GET',
+                url:'http://localhost:3000/posts/2',
+            }).then((response) => {//请求成功的回调
+                console.log(response)
+            })
+        }) ;
+        //添加一篇新的文章
+        btns[1].addEventListener('click',() => {
+            axios({
+                method: 'POST',//新增
+                url:'http://localhost:3000/posts',
+                //设置请求体
+                data:{
+                    title:'今天天气很好',
+                    author:'crab',
+                }
+            }).then((response) => {//请求成功的回调
+                console.log(response)
+            })
+        }) ;
+        btns[2].addEventListener('click',() => {
+            axios({
+                method: 'put',//修改
+                url:'http://localhost:3000/posts/4',
+                //设置请求体
+                data:{
+                    title:'今天天气很好',
+                    author:'crab111',
+                }
+            }).then((response) => {//请求成功的回调
+                console.log(response)
+            })
+        }) ;
+        btns[3].onclick = function () {
+            axios({
+                method: 'delete',
+                url:'http://localhost:3000/posts/4',
+                
+                
+            }).then((response) => {//请求成功的回调
+                console.log(response)
+            })
+        }
+          
+    </script>
+
+  </body>
+</html>
+
